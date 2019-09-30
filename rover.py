@@ -3,12 +3,6 @@ from position import Position
 from plateau import Plateau
 
 
-class Grid(object):
-    def __init__(self, coordinates, rovers):
-        self.coordinates = [0, 0], coordinates
-        self.rovers = rovers
-
-
 class Rover(object):
     commands = {"L": "Left", "R": "Right",
                 "M": "Move forward"}
@@ -17,19 +11,19 @@ class Rover(object):
     x = 0
     y = 0
 
-# Initialize plateau, or grid, for Rover
+# Initialize Rover
 
     def __init__(self, position, plateau, heading, commands):
         self.heading = Rover.heading
         self.commands = commands
         self.position = Position()
         self.plateau = Plateau(2, 2)
-        # self.x = x
-        # self.y = y
 
+# Represent Rover in a nicer way
     def __repr__(self):
         return f"Coordinates of Rover is {self.x},{self.y}. Heading is {self.heading}. Commands: {self.commands}. Position of rover are {self.position}. Plateau: {self.plateau}"
-        # Initial position of Rover
+
+# Initial position of Rover
 
     def set_position(self, position, heading, coordinate_x=0, coordinate_y=0):
         self.position = Position()
@@ -37,6 +31,7 @@ class Rover(object):
         self.coordinate_x = coordinate_x
         self.coordinate_y = coordinate_y
 
+# Set Rover to either 'väderstreck' and move the Rover forward
     def moveForward(self, x, y, direction):
         self.x = Position(x)
         self.y = Position(y)
@@ -47,19 +42,10 @@ class Rover(object):
                 for c in Rover.commands:
                     if c == "M":
                         y += 1
-                        # self.heading = self.turn_rover_left()
-                    # elif c == "M":
-                    #     y -= 1
-                        # self.heading = self.turn_rover_right()
-                        # South
             elif dirs == "S" and y > 0:
                 for c in Rover.commands:
                     if c == "M":
                         y -= 1
-                        # self.heading = self.turn_rover_left()
-                    # elif c == "R":
-                    #     self.heading = self.turn_rover_right()
-                        # West
             elif dirs == "W" and x > 0:
                 for c in Rover.commands:
                     if c == "L":
