@@ -13,19 +13,19 @@ class Rover(object):
 
 # Initialize Rover
 
-    def __init__(self, position, plateau, heading, commands):
-        self.position = position
-        self.plateau = Plateau(3, 3)
+    def __init__(self, plateau, x, y, heading, commands):
+        self.x = x
+        self.y = y
+        self.plateau = Plateau(5, 5)
         self.heading = Rover.directions[heading]
         self.commands = commands
-        # print(self.directions["N"])
 
 
 # Represent Rover in a nicer way
 
 
     def __repr__(self):
-        return f"Position: {self.position}. Plateau: {self.plateau}. Heading: {self.heading}. Commands: {self.commands}"
+        return f"Plateau: {self.plateau}. Position X: {self.x}. Position Y: {self.y}. Heading: {self.heading}. Commands: {self.commands}"
 
 # Initial position of Rover
 
@@ -39,42 +39,49 @@ class Rover(object):
     def moveForward(self, x, y, heading, commands):
         self.x = x
         self.y = y
-        self.heading = heading
+        self.heading = Rover.directions[heading]
         self.commands = commands
+
         for c in commands:
             # North
             if heading == "N" and y < 5:
                 if c == "M":
-                    Rover.y += 1
+                    y += 1
                 elif c == "L":
                     self.heading = self.turn_rover_left()
                 elif c == "R":
                     self.heading = self.turn_rover_right()
+
             elif heading == "S" and y > 0:
                 if c == "M":
-                    Rover.y -= 1
+                    y -= 1
                 elif c == "L":
                     self.heading = self.turn_rover_left()
+
                 elif c == "R":
                     self.heading = self.turn_rover_right()
+
             elif heading == "W" and x > 0:
                 if c == "M":
-                    Rover.x -= 1
+                    x -= 1
                 elif c == "L":
                     self.heading = self.turn_rover_left()
+
                 elif c == "R":
                     self.heading = self.turn_rover_right()
+
                     # East
             elif heading == "E" and x < 5:
                 if c == "M":
-                    Rover.x += 1
-                    print(Rover.x)
+                    x += 1
                 elif c == "L":
                     self.heading = self.turn_rover_left()
                 elif c == "R":
                     self.heading = self.turn_rover_right()
             else:
+                print(x, y)
                 raise ValueError("That's not a valid direction")
+            print(x, y, heading, "done")
 
     def turn_rover_left(self):
         if self.headings-1 < self.directions["N"]:
@@ -83,19 +90,14 @@ class Rover(object):
             return self.headings-1
 
     def turn_rover_right(self):
-        print(self.headings)
         if self.headings+1 > self.directions["W"]:
             return self.directions["N"]
         else:
             return self.headings+1
 
 
-r = Rover((Position()), (Plateau(2, 2)), "S", "RM")
-r.moveForward(2, 2, "E", "MMR")
+r = Rover((Plateau(5, 5)), 0, 0, "N", "LMLMLMLMM")
+
 print(r)
-
-
-# r.moveForward(2, 2, 1)
-
-
-# r.rotate_rover("L")
+r.moveForward(1, 2, "N", "LMLMLMLMM")
+print(r)
