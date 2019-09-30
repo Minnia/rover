@@ -32,8 +32,8 @@ class Rover(object):
         self.heading = heading
 
     def moveForward(self, x, y, direction):
-        self.x = x
-        self.y = y
+        self.x = Position(x)
+        self.y = Position(y)
         if direction == "N":
             y += 1
         elif direction == "S":
@@ -68,5 +68,5 @@ class Rover(object):
             return self.heading+1
 
 
-r = Rover(5, 5, (1, 2), "N", "LMLMLMLMM")
-print(r.__repr__())
+r = Rover(5, 5, (Position()), "N", "LMLMLMLMM")
+print(r)
