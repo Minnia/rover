@@ -12,26 +12,26 @@ class Grid(object):
 class Rover(object):
     commands = {"L": "Left", "R": "Right", "M": "Move forward"}
     directions = {"N": 1, "S": 3, "E": 2, "W": 4}
-    heading = directions["N"]
+    heading = directions
     x = 0
     y = 0
 
 # Initialize plateau, or grid, for Rover
 
-    def __init__(self, x, y, position, heading, commands):
+    def __init__(self, x, y, position, plateau, heading, commands):
         self.heading = heading
         self.commands = commands
         self.position = Position()
+        self.plateau = Plateau(2, 2)
         self.x = x
         self.y = y
 
     def __repr__(self):
-        return f"Coordinates of Rover is {self.x},{self.y}. {self.position}. Heading of Rover is {self.heading}. Commands of rover are {self.commands}"
+        return f"Coordinates of Rover is {self.x},{self.y}. {self.position}. Heading of Rover is {self.heading}. Commands of rover are {self.commands}. Position of plateau is {self.plateau}"
         # Initial position of Rover
 
-    def set_position(self, position, plateau, heading, coordinate_x=0, coordinate_y=0):
+    def set_position(self, position, heading, coordinate_x=0, coordinate_y=0):
         self.position = Position()
-        self.plateau = Plateau(2, 2)
         self.heading = heading
         self.coordinate_x = coordinate_x
         self.coordinate_y = coordinate_y
@@ -39,28 +39,33 @@ class Rover(object):
     def moveForward(self, x, y, direction):
         self.x = Position(x)
         self.y = Position(y)
+        self.direction = Rover.heading
         for dirs in Rover.directions:
+            # North
             if dirs == "N" and y < 5:
                 for c in Rover.commands:
                     if c == "L":
-                        # y += 1
+                        y += 1
                         self.heading = self.turn_rover_left()
                     elif c == "R":
-                        # y-=1
+                        y -= 1
                         self.heading = self.turn_rover_right()
+                        # South
             if dirs == "S" and y > 0:
                 for c in Rover.commands:
                     if c == "L":
-                        # y+= 1
+                        y += 1
                         self.heading = self.turn_rover_left()
                     elif c == "R":
                         self.heading = self.turn_rover_right()
+                        # West
             if dirs == "W" and x > 0:
                 for c in Rover.commands:
                     if c == "L":
                         self.heading = self.turn_rover_left()
                     elif c == "R":
                         self.heading = self.turn_rover_right()
+                        # East
             if dirs == "E" and x > 0:
                 for c in Rover.commands:
                     if c == "L":
@@ -116,9 +121,11 @@ def readfile():
         raise TypeError("Nothing to show")
 
 
-r = Rover(0, 0, (Position()), "N", "LMLMLMLMM")
-
+r = Rover(0, 0, (Position()), "N", "LMLMLMLMM", (Plateau(2, 2)))
+r1 = Rover(1, 1, (Position()), 3, "LM", (Plateau(3, 4)))
 print(r)
+print(r1)
+# r.moveForward(2, 2, 1)
 
 
 # r.rotate_rover("L")
