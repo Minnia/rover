@@ -7,7 +7,7 @@ class Rover(object):
     commands = {"L": "Left", "R": "Right",
                 "M": "Move forward"}
     directions = {"N": 1, "S": 3, "E": 2, "W": 4}
-    headings = directions["S"]
+    headings = directions["N"]
     x = 0
     y = 0
 
@@ -18,6 +18,7 @@ class Rover(object):
         self.plateau = Plateau(3, 3)
         self.heading = heading
         self.commands = commands
+        print(self.directions["N"])
 
 
 # Represent Rover in a nicer way
@@ -35,58 +36,46 @@ class Rover(object):
         self.coordinate_y = coordinate_y
 
 # Set Rover to either 'väderstreck' and move the Rover forward
-    def moveForward(self, x, y, direction):
+    def moveForward(self, x, y, direction, commands):
         self.x = Position(x)
         self.y = Position(y)
-        self.direction = direction
+        self.direction = Rover.directions
+        self.commands = commands
         for dirs in Rover.directions:
-            # North
-            if dirs == "N" and y < 5:
-                for c in Rover.commands:
+            for c in commands:
+                # North
+                if dirs == "N" and y < 5:
                     if c == "M":
                         y += 1
-            elif dirs == "S" and y > 0:
-                for c in Rover.commands:
+                    elif c == "L":
+                        self.heading = self.turn_rover_left()
+                    elif c == "R":
+                        self.heading = self.turn_rover_right()
+                elif dirs == "S" and y > 0:
                     if c == "M":
                         y -= 1
-            elif dirs == "W" and x > 0:
-                for c in Rover.commands:
-                    if c == "L":
-                        x -= 1
+                    elif c == "L":
                         self.heading = self.turn_rover_left()
                     elif c == "R":
-                        x += 1
+                        self.heading = self.turn_rover_right()
+                elif dirs == "W" and x > 0:
+                    if c == "M":
+                        x -= 1
+                    elif c == "L":
+                        self.heading = self.turn_rover_left()
+                    elif c == "R":
                         self.heading = self.turn_rover_right()
                         # East
-            elif dirs == "E" and x > 0:
-                for c in Rover.commands:
-                    x -= 1
-                    if c == "L":
+                elif dirs == "E" and x > 0:
+                    if c == "M":
+                        x += 1
+                    elif c == "L":
                         self.heading = self.turn_rover_left()
                     elif c == "R":
-                        x += 1
                         self.heading = self.turn_rover_right()
-            else:
-                raise ValueError("That's not a valid direction")
-
-            # elif dirs == "S" and y > 0:
-            #     y -= 1
-            # elif dirs == "W" and x > 0:
-            #     x -= 1
-            # elif dirs == "E" and x > 0:
-            #     x += 1
-            # else:
-            #     raise ValueError("That's not a valid direction")
-
-    # def rotate_rover(self, command):
-    #     self.command = command
-
-    #     if command == "L":
-    #         self.heading = self.turn_rover_left()
-    #     elif command == "R":
-    #         self.heading = self.turn_rover_right()
-    #     else:
-    #         print('Command is not a turn')
+                else:
+                    raise ValueError("That's not a valid direction")
+                print(x, y, commands)
 
     def turn_rover_left(self):
         if self.heading-1 < self.directions["N"]:
@@ -101,25 +90,11 @@ class Rover(object):
             return self.heading+1
 
 
-# def readfile():
-#     try:
-#         f = open("input.txt", "r")
-#         li = []
-#         if f.mode == "r":
-#             for line in f:
-#                 li.append(line.replace("\n", ""))
-#         f.close()
-#         if len(li) > 0:
-#             return li
-#     except:
-#         raise TypeError("Nothing to show")
-
-
-r = Rover((Position()), (Plateau(2, 2)), "N", "LM")
-r1 = Rover((Position()), (Plateau(3, 3)), "S", "RM")
-
+r = Rover((Position()), (Plateau(2, 2)), 1, "RM")
+r.moveForward(2, 2, 2, "MMR")
 print(r)
-print(r1)
+
+
 # r.moveForward(2, 2, 1)
 
 

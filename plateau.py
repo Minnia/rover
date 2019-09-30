@@ -9,4 +9,4 @@ class Plateau(object):
 
 
 p = Plateau(5, 5)
-print(p)
+# print(p)
