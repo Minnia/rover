@@ -7,21 +7,24 @@ class Rover(object):
     commands = {"L": "Left", "R": "Right",
                 "M": "Move forward"}
     directions = {"N": 1, "S": 3, "E": 2, "W": 4}
-    heading = directions["N"]
+    headings = directions["S"]
     x = 0
     y = 0
 
 # Initialize Rover
 
     def __init__(self, position, plateau, heading, commands):
-        self.heading = Rover.heading
-        self.commands = commands
         self.position = Position()
-        self.plateau = Plateau(2, 2)
+        self.plateau = Plateau(3, 3)
+        self.heading = heading
+        self.commands = commands
+
 
 # Represent Rover in a nicer way
+
+
     def __repr__(self):
-        return f"Coordinates of Rover is {self.x},{self.y}. Heading is {self.heading}. Commands: {self.commands}. Position of rover are {self.position}. Plateau: {self.plateau}"
+        return f"Position: {self.position}. Plateau: {self.plateau}. Heading: {self.heading}. Commands: {self.commands}"
 
 # Initial position of Rover
 
@@ -35,7 +38,7 @@ class Rover(object):
     def moveForward(self, x, y, direction):
         self.x = Position(x)
         self.y = Position(y)
-        self.direction = Rover.heading
+        self.direction = direction
         for dirs in Rover.directions:
             # North
             if dirs == "N" and y < 5:
@@ -112,9 +115,10 @@ class Rover(object):
 #         raise TypeError("Nothing to show")
 
 
-# r = Rover((Position())), "N", "LMLMLMLMM", (Plateau(2, 2)))
-r1 = Rover((Position()), "S", "LM", (Plateau(3, 4)))
-# print(r)
+r = Rover((Position()), (Plateau(2, 2)), "N", "LM")
+r1 = Rover((Position()), (Plateau(3, 3)), "S", "RM")
+
+print(r)
 print(r1)
 # r.moveForward(2, 2, 1)
 
