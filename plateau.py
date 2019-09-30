@@ -6,3 +6,7 @@ class Plateau(object):
 
     def __repr__(self):
         return f"{self.width},{self.height}"
+
+
+p = Plateau(5, 5)
+print(p)
