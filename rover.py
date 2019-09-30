@@ -31,7 +31,7 @@ class Rover(object):
 
     def set_position(self, position, plateau, heading, coordinate_x=0, coordinate_y=0):
         self.position = Position()
-        self.plateau = Plateau(0, 0, 5, 5)
+        self.plateau = Plateau(2, 2)
         self.heading = heading
         self.coordinate_x = coordinate_x
         self.coordinate_y = coordinate_y
@@ -41,25 +41,53 @@ class Rover(object):
         self.y = Position(y)
         for dirs in Rover.directions:
             if dirs == "N" and y < 5:
-                y += 1
-            elif dirs == "S" and y > 0:
-                y -= 1
-            elif dirs == "W" and x > 0:
-                x -= 1
-            elif dirs == "E" and x < 0:
-                x += 1
+                for c in Rover.commands:
+                    if c == "L":
+                        # y += 1
+                        self.heading = self.turn_rover_left()
+                    elif c == "R":
+                        # y-=1
+                        self.heading = self.turn_rover_right()
+            if dirs == "S" and y > 0:
+                for c in Rover.commands:
+                    if c == "L":
+                        # y+= 1
+                        self.heading = self.turn_rover_left()
+                    elif c == "R":
+                        self.heading = self.turn_rover_right()
+            if dirs == "W" and x > 0:
+                for c in Rover.commands:
+                    if c == "L":
+                        self.heading = self.turn_rover_left()
+                    elif c == "R":
+                        self.heading = self.turn_rover_right()
+            if dirs == "E" and x > 0:
+                for c in Rover.commands:
+                    if c == "L":
+                        self.heading = self.turn_rover_left()
+                    elif c == "R":
+                        self.heading = self.turn_rover_right()
             else:
                 raise ValueError("That's not a valid direction")
 
-    def rotate_rover(self, command):
-        self.command = command
+            # elif dirs == "S" and y > 0:
+            #     y -= 1
+            # elif dirs == "W" and x > 0:
+            #     x -= 1
+            # elif dirs == "E" and x > 0:
+            #     x += 1
+            # else:
+            #     raise ValueError("That's not a valid direction")
 
-        if command == "L":
-            self.heading = self.turn_rover_left()
-        elif command == "R":
-            self.heading = self.turn_rover_right()
-        else:
-            print('Command is not a turn')
+    # def rotate_rover(self, command):
+    #     self.command = command
+
+    #     if command == "L":
+    #         self.heading = self.turn_rover_left()
+    #     elif command == "R":
+    #         self.heading = self.turn_rover_right()
+    #     else:
+    #         print('Command is not a turn')
 
     def turn_rover_left(self):
         if self.heading-1 < self.directions["N"]:
@@ -90,8 +118,6 @@ def readfile():
 
 r = Rover(0, 0, (Position()), "N", "LMLMLMLMM")
 
-print(r)
-r.moveForward(0, 0, "S")
 print(r)
 
 
