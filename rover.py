@@ -1,5 +1,6 @@
 # Mars Rover
 from position import Position
+from plateau import Plateau
 
 
 class Grid(object):
@@ -14,6 +15,7 @@ class Rover(object):
     heading = directions["N"]
     x = 0
     y = 0
+
 # Initialize plateau, or grid, for Rover
 
     def __init__(self, x, y, position, heading, commands):
@@ -27,24 +29,24 @@ class Rover(object):
         return f"Coordinates of Rover is {self.x},{self.y}. {self.position}. Heading of Rover is {self.heading}. Commands of rover are {self.commands}"
         # Initial position of Rover
 
-    @classmethod
-    def set_position(cls, position, heading, coordinate_x=0, coordinate_y=0):
-        cls.position = Position()
-        cls.heading = heading
-        cls.coordinate_x = coordinate_x
-        cls.coordinate_y = coordinate_y
+    def set_position(self, position, plateau, heading, coordinate_x=0, coordinate_y=0):
+        self.position = Position()
+        self.plateau = Plateau(0, 0, 5, 5)
+        self.heading = heading
+        self.coordinate_x = coordinate_x
+        self.coordinate_y = coordinate_y
 
     def moveForward(self, x, y, direction):
         self.x = Position(x)
         self.y = Position(y)
-        for dirs in direction:
-            if dirs == "N":
+        for dirs in Rover.directions:
+            if dirs == "N" and y < 5:
                 y += 1
-            elif dirs == "S":
+            elif dirs == "S" and y > 0:
                 y -= 1
-            elif dirs == "W":
+            elif dirs == "W" and x > 0:
                 x -= 1
-            elif dirs == "E":
+            elif dirs == "E" and x < 0:
                 x += 1
             else:
                 raise ValueError("That's not a valid direction")
@@ -89,9 +91,8 @@ def readfile():
 r = Rover(0, 0, (Position()), "N", "LMLMLMLMM")
 
 print(r)
-r.moveForward(1, 2, "S")
+r.moveForward(0, 0, "S")
 print(r)
-r.moveForward(1, 2, "N")
-print(r)
-readfile()
+
+
 # r.rotate_rover("L")
