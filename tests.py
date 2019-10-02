@@ -28,5 +28,29 @@ class RoverTests(unittest.TestCase):
         self.assertEqual(self.rover.heading, 1)
 
 
+class PlateauTest(unittest.TestCase):
+    def setUp(self):
+        self.plateau = Plateau(5, 5)
+
+    def test_init(self):
+        self.assertEqual(self.plateau.width, 5)
+        self.assertEqual(self.plateau.height, 5)
+
+    def test_repr(self):
+        self.assertTrue(repr(self.plateau), "5,5")
+
+
+class PositionTest(unittest.TestCase):
+    def setUp(self):
+        self.position = Position(0, 0)
+
+    def test_init(self):
+        self.assertEqual(self.position.x, 0)
+        self.assertEqual(self.position.y, 0)
+
+    def test_repr(self):
+        self.assertTrue(repr(self.position), "Position of Rover is 0,0")
+
+
 if __name__ == "__main__":
     unittest.main()
