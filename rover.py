@@ -24,22 +24,12 @@ class Rover(object):
     def __init__(self, x, y, heading, commands):
         self.x = x
         self.y = y
-        self.plateau = Plateau(5, 5)
         self.heading = Rover.directions[heading]
         self.commands = commands
 
-# Represent Rover in a nicer way
-
-    def __repr__(self):
-        return f"Plateau: {self.plateau}. Position X: {self.x}. Position Y: {self.y}. Heading: {self.heading}. Commands: {self.commands}"
-
-# Initial position of Rover
-
-    # def set_position(self, position, heading, coordinate_x, coordinate_y):
-    #     self.position = position
-    #     self.heading = heading
-    #     self.coordinate_x = coordinate_x
-    #     self.coordinate_y = coordinate_y
+# Represent Rover in a nicer way. It is uninitialized but can be initialized
+    # def __repr__(self):
+    #     return f"Plateau: {self.plateau}. Position X: {self.x}. Position Y: {self.y}. Heading: {self.heading}. Commands: {self.commands}"
 
 # Set Rover to either 'väderstreck' and move the Rover forward
     def moveRover(self, x, y, heading):
@@ -80,9 +70,8 @@ class Rover(object):
 
 
 r = Rover(0, 0, "N", "LMLMLMLMM")
-print(r)
+
 r.moveRover(1, 2, "N")
-print(r)
+
 r1 = Rover(0, 0, "N", "MMRMMRMRRM")
 r1.moveRover(3, 3, "E")
-print(r1)
